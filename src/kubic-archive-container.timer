@@ -1,0 +1,10 @@
+[Unit]
+Description=Backup the openSUSE registry once a week into a local registry
+
+[Timer]
+OnCalendar=weekly
+AccuracySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

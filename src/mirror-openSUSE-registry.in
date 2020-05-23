@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+# This script will mirror the newest official images from registry.opensuse.org
+# in the kubic and opensuse namespace.
+
+TMPFILE=`mktemp /tmp/registry-mirror.XXXXXXXXXX.yaml` || exit 1
+
+SECRET=`cat @sysconfdir@/kubic-archive/secret-registry`
+
+mirror-registry --out $TMPFILE --minimize registry.opensuse.org "(^kubic|^opensuse/([^/]+)$)"
+skopeo sync --scoped --src yaml --dest docker --dest-creds admin:${SECRET} $TMPFILE localhost
+
+rm $TMPFILE

@@ -1,0 +1,10 @@
+[Unit]
+Description=Backup the openSUSE Kubic Installer DVD once a week
+
+[Timer]
+OnCalendar=weekly
+AccuracySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

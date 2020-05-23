@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+ARCHIVE=/srv/kubic-iso
+
+mkdir -p ${ARCHIVE}
+rm -rf ${ARCHIVE}/.tmp
+mkdir ${ARCHIVE}/.tmp
+
+wget -r -l1 -np -nd "http://download.opensuse.org/tumbleweed/iso/" -A "openSUSE-Kubic-DVD-x86_64-Snapshot20*-Media.iso" -P ${ARCHIVE}/.tmp
+wget -r -l1 -np -nd "http://download.opensuse.org/tumbleweed/iso/" -A "openSUSE-Kubic-DVD-x86_64-Snapshot20*-Media.iso.sha256" -P ${ARCHIVE}/.tmp
+
+pushd ${ARCHIVE}/.tmp
+sha256sum --status -c openSUSE-Kubic-DVD-x86_64-Snapshot20*-Media.iso.sha256
+if [ $? -ne 0 ]; then
+	echo "Download of openSUSE-Kubic-DVD-x86_64-Snapshot20*-Media.iso is corrupt"
+	exit 1
+fi
+mv openSUSE-Kubic-DVD-x86_64-Snapshot20* ..
+popd
+rm -rf ${ARCHIVE}/.tmp
+
+# Cleanup old files
+
+pushd ${ARCHIVE}
+rm -rf `/bin/ls openSUSE-Kubic-DVD-x86_64-Snapshot20*-Media.iso* | sort | head -n -16` ||:
+
+exit 0
