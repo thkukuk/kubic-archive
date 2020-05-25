@@ -13,4 +13,4 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 
 AC_OUTPUT([Makefile src/Makefile src/kubic-archive-DVD.service \
-	src/kubic-archive-container.service])
+	src/kubic-archive-container.service src/mirror-openSUSE-registry])

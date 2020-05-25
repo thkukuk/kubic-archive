@@ -19,3 +19,6 @@ core
 config.log
 config.status
 kubic-archive-*.tar.*
+src/kubic-archive-DVD.service
+src/kubic-archive-container.service
+src/mirror-openSUSE-registry
